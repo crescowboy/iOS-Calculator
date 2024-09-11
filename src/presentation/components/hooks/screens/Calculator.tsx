@@ -5,7 +5,8 @@ import {CalculatorButton} from '../../CalculatorButton';
 import {useCalculator} from '../useCalculator';
 
 export const Calculator = () => {
-  const {number, buildNumber} = useCalculator();
+  const {number, buildNumber, toggleSing, clean, deleteOperation} =
+    useCalculator();
 
   return (
     <View style={styles.calculatorContainer}>
@@ -18,19 +19,19 @@ export const Calculator = () => {
 
       <View style={styles.row}>
         <CalculatorButton
-          onPress={() => console.log('C')}
+          onPress={() => clean()}
           label="C"
           color={colors.lighGray}
           buttonText="black"
         />
         <CalculatorButton
-          onPress={() => console.log('+/-')}
+          onPress={() => toggleSing()}
           label="+/-"
           color={colors.lighGray}
           buttonText="black"
         />
         <CalculatorButton
-          onPress={() => console.log('del')}
+          onPress={() => deleteOperation()}
           label="del"
           color={colors.lighGray}
           buttonText="black"
