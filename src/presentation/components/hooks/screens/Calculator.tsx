@@ -5,7 +5,10 @@ import {CalculatorButton} from '../../CalculatorButton';
 import {useCalculator} from '../useCalculator';
 
 export const Calculator = () => {
-  const {number, buildNumber, toggleSing, clean, deleteOperation} =
+  const {number, prevNumber, buildNumber, toggleSing, clean, deleteOperation,  divideOperation,
+    multiplyOperator,
+    subtractOperation,
+    addOperation,} =
     useCalculator();
 
   return (
@@ -14,7 +17,9 @@ export const Calculator = () => {
         <Text adjustsFontSizeToFit numberOfLines={1} style={styles.mainResult}>
           {number}
         </Text>
-        <Text style={styles.subResult}>15</Text>
+        <Text  style={styles.subResult}>
+          {(prevNumber === '0') ? ' ' : prevNumber}
+        </Text>
       </View>
 
       <View style={styles.row}>
@@ -37,7 +42,7 @@ export const Calculator = () => {
           buttonText="black"
         />
         <CalculatorButton
-          onPress={() => console.log('/')}
+          onPress={divideOperation}
           label="/"
           color={colors.orange}
         />
@@ -59,8 +64,8 @@ export const Calculator = () => {
           color={colors.darkGray}
         />
         <CalculatorButton
-          onPress={() => console.log('%')}
-          label="%"
+          onPress={multiplyOperator}
+          label="X"
           color={colors.orange}
         />
       </View>
@@ -81,7 +86,7 @@ export const Calculator = () => {
           color={colors.darkGray}
         />
         <CalculatorButton
-          onPress={() => console.log('-')}
+          onPress={subtractOperation}
           label="-"
           color={colors.orange}
         />
@@ -103,7 +108,7 @@ export const Calculator = () => {
           color={colors.darkGray}
         />
         <CalculatorButton
-          onPress={() => console.log('+')}
+          onPress={addOperation}
           label="+"
           color={colors.orange}
         />
