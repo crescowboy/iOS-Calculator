@@ -8,7 +8,7 @@ export const Calculator = () => {
   const {number, prevNumber, buildNumber, toggleSing, clean, deleteOperation,  divideOperation,
     multiplyOperator,
     subtractOperation,
-    addOperation,} =
+    addOperation, calculatorResult} =
     useCalculator();
 
   return (
@@ -126,7 +126,7 @@ export const Calculator = () => {
           color={colors.darkGray}
         />
         <CalculatorButton
-          onPress={() => console.log('=')}
+          onPress={calculatorResult}
           label="="
           color={colors.orange}
         />
