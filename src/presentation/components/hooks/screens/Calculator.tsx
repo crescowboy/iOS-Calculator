@@ -43,7 +43,7 @@ export const Calculator = () => {
         />
         <CalculatorButton
           onPress={divideOperation}
-          label="/"
+          label="÷"
           color={colors.orange}
         />
       </View>
@@ -65,7 +65,7 @@ export const Calculator = () => {
         />
         <CalculatorButton
           onPress={multiplyOperator}
-          label="X"
+          label="x"
           color={colors.orange}
         />
       </View>

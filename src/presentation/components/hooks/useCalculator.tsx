@@ -41,34 +41,52 @@ export const useCalculator = () => {
   };
 
   const buildNumber = (numberString: String) => {
-    if (number.includes('.') && numberString === '.') {
+    // Eliminar las comas existentes para no causar problemas en el formateo
+    let cleanNumber = number.replace(/,/g, "");
+  
+    if (cleanNumber.includes('.') && numberString === '.') {
       return;
     }
-
-    if (number.startsWith('0') || number.startsWith('-0')) {
+  
+    if (cleanNumber.length > 8) {
+      return setNumber(number);
+    }
+  
+    if (cleanNumber.startsWith('0') || cleanNumber.startsWith('-0')) {
       // Punto decimal
       if (numberString === '.') {
-        return setNumber(number + numberString);
+        return setNumber(cleanNumber + numberString);
       }
-
-      //Evaluar si es otro cero o no hay punto
-      if (numberString === '0' && number.includes('.')) {
-        return setNumber(number + numberString);
+  
+      // Evaluar si es otro cero o no hay punto
+      if (numberString === '0' && cleanNumber.includes('.')) {
+        return setNumber(cleanNumber + numberString);
       }
-      // Evaluar si es diferente de cero, no hay punto, y es el primer numero
-      if (numberString !== '0' && !number.includes('.')) {
+      
+      // Evaluar si es diferente de cero, no hay punto, y es el primer número
+      if (numberString !== '0' && !cleanNumber.includes('.')) {
         return setNumber(numberString);
       }
+  
       // Evitar 000000
-      if (numberString === '0' && !number.includes('.')) {
+      if (numberString === '0' && !cleanNumber.includes('.')) {
         return;
       }
-
-      return setNumber(number + numberString);
+  
+      return setNumber(cleanNumber + numberString);
     }
-
-    setNumber(number + numberString);
+  
+    // Concatenamos el nuevo número
+    cleanNumber = cleanNumber + numberString;
+  
+    // Aplicamos el formateo de comas cada tres dígitos
+    const formattedNumber = cleanNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  
+    // Actualizamos el estado con el número formateado
+    setNumber(formattedNumber);
   };
+  
+  
 
   const setLastNumber = () =>{
     if(number.endsWith('.')){
@@ -101,21 +119,21 @@ export const useCalculator = () => {
     }
 
     const calculatorResult = () =>{
-      const num1 = Number(number);
-      const num2 = Number(prevNumber);
+      const num1 = Number(number.replace(/,/g, ""));
+      const num2 = Number(prevNumber.replace(/,/g, ""));
 
       switch(lastOperation.current){
         case Operator.add:
-         setNumber(`${num1 + num2}`);
+         setNumber(`${(num1 + num2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`);
          break;
          case Operator.subtract:
-         setNumber(`${num2 -num1 }`);
+         setNumber(`${(num2 -num1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`);
          break;
          case Operator.multiply:
-         setNumber(`${num1 * num2}`);
+         setNumber(`${(num1 * num2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`);
          break;
          case Operator.divide:
-         setNumber(`${ num2 / num1}`);
+         setNumber(`${(num2 / num1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`);
          break;
 
         default:
